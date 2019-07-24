@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="nav" :class="{'is-black' : isAboutPage}">
-      <nuxt-link to="/"><a>Take me home</a></nuxt-link>
+      <nuxt-link to="/">Take me home</nuxt-link>
       |
-      <nuxt-link to="/about"><a>Tell me about yourself</a></nuxt-link>
+      <nuxt-link to="/about">Tell me about yourself</nuxt-link>
     </div>
     <nuxt />
   </div>
