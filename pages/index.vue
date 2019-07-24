@@ -12,7 +12,7 @@ export default {
 
 <style scoped>
 .container {
-  background-color: blue;
+  background-color: red;
   color: #fff;
   font-size: 50px;
   margin: 0 auto;
