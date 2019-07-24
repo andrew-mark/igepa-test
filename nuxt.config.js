@@ -43,5 +43,9 @@ export default {
     */
     extend(config, ctx) {
     }
+  },
+  transition: {
+    name: 'page',
+    mode: ''
   }
 }
