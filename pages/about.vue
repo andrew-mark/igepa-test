@@ -31,4 +31,14 @@ img {
   height: auto;
   width: 400px;
 }
+
+.page-enter-active, .page-leave-active {
+  transition: transform 0.7s ease;
+  position: relative;
+}
+.page-enter, .page-leave-active {
+  transform: translateX(100vw);
+  position: absolute;
+  transition: transform 0.7s ease;
+}
 </style>

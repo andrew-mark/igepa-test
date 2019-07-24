@@ -46,6 +46,6 @@ export default {
   },
   transition: {
     name: 'page',
-    mode: ''
+    mode: 'out-in'
   }
 }

@@ -28,9 +28,10 @@ export default {
 }
 
 .page-enter-active, .page-leave-active {
-  transition: transform 0.5s ease;
+  transition: transform 0.7s ease;
 }
 .page-enter, .page-leave-active {
-  transform: translateX(-100%);
+  transform: translateX(-100vw);
+  transition: transform 0.7s ease;
 }
 </style>
