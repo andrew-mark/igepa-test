@@ -1,6 +1,6 @@
-# igepa-test
+# igepa-microsite
 
-> Test nuxt project
+> Igepa microsite
 
 ## Build Setup
 

@@ -23,17 +23,34 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/scss/styles.scss'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~plugins/media-query.js',
+    { src: '~plugins/velocity.js', ssr: false }
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/style-resources',
+    'nuxt-svg-loader',
   ],
+  styleResources: {
+    sass: [
+      '~/assets/scss/shared/resources.scss'
+    ]
+  },
+  /*
+  ** Axios module configuration
+  ** See https://axios.nuxtjs.org/options
+  */
+  axios: {
+  },
   /*
   ** Build configuration
   */
@@ -43,9 +60,5 @@ export default {
     */
     extend(config, ctx) {
     }
-  },
-  transition: {
-    name: 'page',
-    mode: 'out-in'
   }
 }

@@ -1,0 +1,40 @@
+/*
+  Colours
+*/
+
+$black: #000;
+$color-teal: #89C6CC;
+$color-purple: #422583;
+$color-slate: #8A9BA2;
+$color-light-grey: #AFB5B9;
+
+/*
+  Sizings
+*/
+
+$grid-max-content-width: 1280px;
+$grid-wrapper-padding-default: 16px;
+$grid-gutters: 32px;
+$grid-columns: 12;
+
+/*
+  Define project breakpoints
+*/
+
+$breakpoints: (
+  tiny: 375px,
+  small: 480px,
+  medium: 769px,
+  medium_large: 880px,
+  large: 1024px,
+  extra_large: 1280px
+);
+
+$breakpoints-max: (
+  tiny: map-get($breakpoints, 'tiny') - 1,
+  small: map-get($breakpoints, 'small') - 1,
+  medium: map-get($breakpoints, 'medium') - 1,
+  medium_large: map-get($breakpoints, 'medium_large') - 1,
+  large: map-get($breakpoints, 'large') - 1,
+  extra_large: map-get($breakpoints, 'extra_large') - 1
+);

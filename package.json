@@ -1,8 +1,8 @@
 {
-  "name": "igepa-test",
+  "name": "igepa-microsite",
   "version": "1.0.0",
-  "description": "Test nuxt project",
-  "author": "andrew mark",
+  "description": "Igepa microsite",
+  "author": "Andrew Butler a.butler@sp.design",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -11,9 +11,20 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "nuxt": "^2.0.0"
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/style-resources": "^0.1.2",
+    "lodash.debounce": "^4.0.8",
+    "nuxt": "^2.0.0",
+    "nuxt-svg-loader": "^1.0.1",
+    "spectre.css": "^0.5.8",
+    "velocity-animate": "^1.5.2",
+    "vue-mq": "^1.0.1",
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "css-loader": "^2.1.1",
+    "node-sass": "^4.12.0",
+    "nodemon": "^1.18.9",
+    "sass-loader": "^7.1.0"
   }
 }

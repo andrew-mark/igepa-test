@@ -1,66 +1,28 @@
 <template>
   <div>
-    <div class="nav" :class="{'is-black' : isAboutPage}">
-      <nuxt-link to="/">Take me home</nuxt-link>
-      |
-      <nuxt-link to="/about">Tell me about yourself</nuxt-link>
+    <div class="l-Default-backgroundWrapper">
+      <div class="l-Default-leftContainer"></div>
+      <div class="l-Default-rightContainer"></div>
     </div>
-    <nuxt />
+    <TheHeader />
+    <div class="l-Main">
+      <nuxt />
+    </div>
   </div>
 </template>
 <script>
+  import TheHeader from '@/components/TheHeader'
   export default {
     data() {
       return {
 
       }
     },
-    computed: {
-      isAboutPage() {
-        return this.$route.name === 'about'
-      }
+    components: {
+      TheHeader
     }
   }
 </script>
-<style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.nav {
-  color: #fff;
-  position: absolute;
-  left: 50%;
-  top: 20px;
-  transform: translate(-50%);
-}
-
-.nav.nav.is-black {
-  color: #000;
-}
-
-.nav.is-black a {
-  color: #000;
-}
-
-a {
-  color: #fff;
-  text-decoration: none;
-}
-
-a:hover {
-  opacity: 0.7;
-}
+<style lang="scss">
 </style>
+

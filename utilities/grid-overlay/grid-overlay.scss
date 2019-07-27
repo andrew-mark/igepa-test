@@ -1,0 +1,40 @@
+$-dev-color-primary: #09f;
+
+.-dev-GridOverlay {
+  bottom: 0;
+  box-sizing: border-box;
+  left: 0;
+  opacity: 0.25;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  user-select: none;
+  z-index: 1000;
+
+  &-wrapper {
+    max-width: $grid-max-content-width;
+
+  &:after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+  }
+
+  &-wrapper,
+  &-container,
+  &-cell {
+    height: 100%;
+  }
+
+  &-cell {
+    &:before {
+      background-color: $-dev-color-primary;
+      content: '';
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
