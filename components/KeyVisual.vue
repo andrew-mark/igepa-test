@@ -89,11 +89,12 @@ export default {
     },
     colorSvg() {
       let colorIndex = 0
-      let lineIndex = 0
+      let lineIndex = 1
       let colors = []
-      let interval = 80
+      let interval = 100
       let linesPlusOne = this.svgLines.length + 1
       
+
       this.svgLines.forEach((line, index) => {
         const getNewColor = this.modulo(index, 6)
         if (getNewColor && index !== 0) {
@@ -121,6 +122,8 @@ export default {
           numberIndex++
         }
         if (lineIndex === this.svgLines.length - 1) {
+          let line = this.svgLines[0]
+          line.setAttribute("stroke", colors[41]);
           this.integer = 42
           this.textColor = '#FFF'
           this.endState = true

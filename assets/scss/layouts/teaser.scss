@@ -45,10 +45,10 @@
 
 .l-Main {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 
   &.loading-finished {
-    height: auto;
+    // height: auto;
   }
 
   @include min-respond-to('medium') {
@@ -62,7 +62,7 @@
 }
 
 .fadeOut-enter-active, .fadeOut-leave-active {
-  transition: opacity 1s cubic-bezier(.72,.22,.56,1.02) 0.5s;
+  transition: opacity 0s cubic-bezier(.72,.22,.56,1.02) 0.5s;
 }
 .fadeOut-enter, .fadeOut-leave-active {
   opacity: 0;

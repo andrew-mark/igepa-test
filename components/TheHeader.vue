@@ -25,7 +25,7 @@
     },
     computed: {
       getHeight() {
-        return this.loadHeader ? {opacity: 1, position: 'relative', transition: 'opacity 1s ease'} : {opacity: 0, position: 'absolute'}
+        // return this.loadHeader ? {opacity: 1 } : {opacity: 0}
       }
     }
   }
@@ -35,10 +35,12 @@
     align-items: center;
     display: flex;
     height: 10vh;
+    opacity: 1;
     width: 100%;
 
     @include max-respond-to('medium') {
       background-color: #422583;
+      // position: absolute;
     }
 
     &-wrapper {

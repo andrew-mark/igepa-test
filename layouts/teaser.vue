@@ -13,7 +13,7 @@
     </div>
     <mq-layout :mq="['tiny', 'small', 'medium']">
       <transition name="slideFooterIn">
-        <TheFooter v-if="animationFinished" />
+        <!-- <TheFooter v-if="animationFinished" /> -->
       </transition>
     </mq-layout>
     <div class="l-Page-dimensionHelper"></div>

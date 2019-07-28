@@ -6,7 +6,7 @@
         <div class="l-Teaser-cardClone"></div>
         <div class="l-Teaser-placeholder"></div>
       </div>
-      <div class="l-Teaser-container l-Teaser-container--center" ref="container" :style="lazyContainerStyles" :class="{'fullscreen': !startCardTransitions, 'animation-finished': animationIsFinished}">
+      <div class="l-Teaser-container l-Teaser-container--center" ref="container" :style="[lazyContainerStyles, containerStyles]" :class="{'fullscreen': !startCardTransitions, 'animation-finished': animationIsFinished}">
         <div class="l-Teaser-mobileSwipe" :class="{'slide-in': mobileSwipeIn, 'slide-out': mobileSwipeOut}"></div>
         <div class="l-Teaser-text" :class="[getTextClasses]">
           <div v-if="showText" class="l-Teaser-container l-Teaser-container--text">
@@ -92,7 +92,8 @@
         isIE11: false,
         applyBoxShadow: false,
         mobileSwipeIn: false,
-        mobileSwipeOut: false
+        mobileSwipeOut: false,
+        containerStyles: {}
       }
     },
     head() {
@@ -118,13 +119,18 @@
       startCardTransitions() {
         setTimeout(() => {
           this.mobileSwipeIn = true
-        }, 400)
+        }, 500)
         this.startTransitions()
       },
       mobileSwipeIn() {
         setTimeout(() => {
           this.mobileSwipeOut = true
         }, 500)
+      },
+      mobileSwipeOut() {
+        this.containerStyles = {
+          height: '100%'
+        }
       },
       animationIsFinished() {
         if (this.cardRequiresHorizontalMovement) {
@@ -220,7 +226,7 @@
         } else {
           this.animationStarted()
           this.$eventBus.$emit('load-header')
-          this.$velocity(this.card, { opacity: 0 }, { duration: 1000 })
+          this.$velocity(this.card, { opacity: 0 }, { duration: 0.000001 })
           .then(() => {
             this.showText = true
             this.$velocity(this.card, { opacity: 1 }, { duration: 0.000000001 })
