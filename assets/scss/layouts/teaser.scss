@@ -62,16 +62,9 @@
 }
 
 .fadeOut-enter-active, .fadeOut-leave-active {
-  transition: opacity 1.5s cubic-bezier(.72,.22,.56,1.02) 0.5s;
+  transition: opacity 1s cubic-bezier(.72,.22,.56,1.02) 0.5s;
 }
 .fadeOut-enter, .fadeOut-leave-active {
-  opacity: 0;
-}
-
-.fadeOutVertical-enter-active, .fadeOutVertical-leave-active {
-  transition: opacity 1s cubic-bezier(.72,.22,.56,1.02);
-}
-.fadeOutVertical-enter, .fadeOutVertical-leave-active {
   opacity: 0;
 }
 

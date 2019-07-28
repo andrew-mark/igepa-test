@@ -7,6 +7,7 @@
         <div class="l-Teaser-placeholder"></div>
       </div>
       <div class="l-Teaser-container l-Teaser-container--center" ref="container" :style="lazyContainerStyles" :class="{'fullscreen': !startCardTransitions, 'animation-finished': animationIsFinished}">
+        <div class="l-Teaser-mobileSwipe" :class="{'slide-in': mobileSwipeIn, 'slide-out': mobileSwipeOut}"></div>
         <div class="l-Teaser-text" :class="[getTextClasses]">
           <div v-if="showText" class="l-Teaser-container l-Teaser-container--text">
             <div class="l-Teaser-textInner">
@@ -89,7 +90,9 @@
         lazyContainerStyles: {},
         placeholderWidth: 0,
         isIE11: false,
-        applyBoxShadow: false
+        applyBoxShadow: false,
+        mobileSwipeIn: false,
+        mobileSwipeOut: false
       }
     },
     head() {
@@ -113,7 +116,15 @@
     },
     watch: {
       startCardTransitions() {
+        setTimeout(() => {
+          this.mobileSwipeIn = true
+        }, 400)
         this.startTransitions()
+      },
+      mobileSwipeIn() {
+        setTimeout(() => {
+          this.mobileSwipeOut = true
+        }, 1000)
       },
       animationIsFinished() {
         if (this.cardRequiresHorizontalMovement) {
@@ -151,15 +162,8 @@
         return this.getViewportHeight - 40
       },
       getTextClasses() {
-        if (this.animationHasStarted && !this.animationIsFinished) {
+        if (this.mobileSwipeIn) {
           return [
-            'animation-started'
-          ]
-        } 
-
-        if (this.animationIsFinished) {
-          return [
-            'animation-started',
             'animation-finished'
           ]
         }
@@ -213,14 +217,13 @@
             this.showText = true
             this.finishTransitions()
           })
-          
         } else {
           this.animationStarted()
-         
+          this.$eventBus.$emit('load-header')
           this.$velocity(this.card, { opacity: 0 }, { duration: 1000 })
           .then(() => {
-            this.$velocity(this.card, { opacity: 1 }, { duration: 100 })
             this.showText = true
+            this.$velocity(this.card, { opacity: 1 }, { duration: 0.000000001 })
             this.finishTransitions()
           })
         }
@@ -232,7 +235,6 @@
             this.card.classList.add('is-not-IE')
           }
         } else {
-          this.$eventBus.$emit('load-header')
           this.card.classList.add('animation-finished');
         }
         this.animationFinished()

@@ -44,13 +44,7 @@
       ...mapState('loading-sequence', {
         animationFinished: state => state.animationFinished,
         loading: state => state.loading
-      }),
-      verticalLayout() {
-        return window.innerWidth < 768
-      },
-      overlayTransitionName() {
-        return this.verticalLayout ? 'fadeOutVertical' : 'fadeOut'
-      }
+      })
     },
     watch: {
       loading() {

@@ -25,7 +25,7 @@
     },
     computed: {
       getHeight() {
-        return this.loadHeader ? {visibility: 'visible', position: 'relative'} : {visibility: 'hidden', position: 'absolute'}
+        return this.loadHeader ? {opacity: 1, position: 'relative', transition: 'opacity 1s ease'} : {opacity: 0, position: 'absolute'}
       }
     }
   }
@@ -35,6 +35,7 @@
     align-items: center;
     display: flex;
     height: 10vh;
+    width: 100%;
 
     @include max-respond-to('medium') {
       background-color: #422583;
