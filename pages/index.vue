@@ -124,7 +124,7 @@
       mobileSwipeIn() {
         setTimeout(() => {
           this.mobileSwipeOut = true
-        }, 1000)
+        }, 500)
       },
       animationIsFinished() {
         if (this.cardRequiresHorizontalMovement) {
