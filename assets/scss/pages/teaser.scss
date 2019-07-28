@@ -1,5 +1,5 @@
 .l-Teaser {
-  background-color: $color-purple;
+  // background-color: $color-purple;
   width: 100%;
 
   @include min-respond-to('medium') {
@@ -372,7 +372,7 @@
 
   &-mobileSwipe {
     background-color: $color-teal;
-    height: 90vh;
+    height: 110vh;
     position: absolute;
     top: -10vh;
     left: 0;

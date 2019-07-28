@@ -226,7 +226,7 @@
         } else {
           this.animationStarted()
           this.$eventBus.$emit('load-header')
-          this.$velocity(this.card, { opacity: 0 }, { duration: 0.000001 })
+          this.$velocity(this.card, { opacity: 0 }, { duration: 500 })
           .then(() => {
             this.showText = true
             this.$velocity(this.card, { opacity: 1 }, { duration: 0.000000001 })

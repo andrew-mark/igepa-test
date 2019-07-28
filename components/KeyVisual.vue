@@ -6,7 +6,7 @@
         </line>
         <circle cx="50" cy="50" r="17" class="c-KeyVisual-outerCircle" />
         <circle cx="50" cy="50" r="11.5" :class="{'initial': initialState.color, 'initial-motion': initialState.motion, 'end': endState}" class="c-KeyVisual-innerCircle" />
-        <text v-for="(number,index) in currentStep" :key="`number-${index}`" x="50" y="50" width="100" dy="0.28em" :class="{'initial-color': initialState.color, 'is-active': !transitionNumbers}" :style="{fill: textColor}" class="c-KeyVisual-text">{{number}}</text>
+        <text v-for="(number,index) in currentStep" :key="`number-${index}`" x="50" y="50" width="100" dy="0.28em" :class="{'initial-color': initialState.color, 'is-active': number === integer}" :style="{fill: textColor}" class="c-KeyVisual-text">{{number}}</text>
       </svg>
     </div>
   </transition>
@@ -89,7 +89,7 @@ export default {
     },
     colorSvg() {
       let colorIndex = 0
-      let lineIndex = 1
+      let lineIndex = 0
       let colors = []
       let interval = 100
       let linesPlusOne = this.svgLines.length + 1
@@ -122,12 +122,14 @@ export default {
           numberIndex++
         }
         if (lineIndex === this.svgLines.length - 1) {
-          let line = this.svgLines[0]
-          line.setAttribute("stroke", colors[41]);
+          // let line = this.svgLines[0]
+          // line.setAttribute("stroke", colors[41]);
           this.integer = 42
           this.textColor = '#FFF'
           this.endState = true
-          this.endLoading()
+          setTimeout(() => {
+            this.endLoading()
+          }, 300)
         } else {
           this.integer = this.numbers[numberIndex]
           this.textColor = this.colors[numberIndex]
@@ -186,21 +188,25 @@ export default {
       transform: scale(0.96);
       transform-origin: center;
       transition: all 0.15s ease-in;
+      opacity: 0;
 
       &.initial-color {
+        opacity: 1;
         fill: $color-purple;
       }
 
       &.initial-motion {
+        opacity: 1;
         fill: $color-purple;
         transform: scale(1);
         transition: all 0.35s ease-out;
       }
 
       &.end {
+        opacity: 1;
         fill: $color-slate;
         transform: scale(1);
-        transition: all 0.5s ease-out;
+        transition: all 0.15s ease-out;
       }
     }
 
@@ -215,7 +221,7 @@ export default {
       &.is-active {
         opacity: 1;
         transform: scale(1) translateY(1px);
-        transition: opacity 0.35s ease, transform 0.15s ease;
+        transition: opacity 0.15s ease, transform 0.15s ease;
       }
     }
   }
