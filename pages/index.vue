@@ -7,7 +7,7 @@
         <div class="l-Teaser-placeholder"></div>
       </div>
       <div class="l-Teaser-container l-Teaser-container--center" ref="container" :style="[lazyContainerStyles, containerStyles]" :class="{'fullscreen': !startCardTransitions, 'animation-finished': animationIsFinished}">
-        <div class="l-Teaser-mobileSwipe" :class="{'slide-in': mobileSwipeIn, 'slide-out': mobileSwipeOut}"></div>
+       
         <div class="l-Teaser-text" :class="[getTextClasses]">
           <div v-if="showText" class="l-Teaser-container l-Teaser-container--text">
             <div class="l-Teaser-textInner">
@@ -119,17 +119,19 @@
       startCardTransitions() {
         setTimeout(() => {
           this.mobileSwipeIn = true
-        }, 500)
+        }, 0)
         this.startTransitions()
       },
       mobileSwipeIn() {
         setTimeout(() => {
           this.mobileSwipeOut = true
-        }, 500)
+        }, 900)
       },
       mobileSwipeOut() {
-        this.containerStyles = {
-          height: '100%'
+        if (!this.cardRequiresHorizontalMovement) {
+          this.containerStyles = {
+            height: '100%'
+          }
         }
       },
       animationIsFinished() {
@@ -226,7 +228,7 @@
         } else {
           this.animationStarted()
           this.$eventBus.$emit('load-header')
-          this.$velocity(this.card, { opacity: 0 }, { duration: 500 })
+          this.$velocity(this.card, { opacity: 0 }, { duration: 700 })
           .then(() => {
             this.showText = true
             this.$velocity(this.card, { opacity: 1 }, { duration: 0.000000001 })

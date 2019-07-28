@@ -53,6 +53,7 @@
 
   @include min-respond-to('medium') {
     height: 80vh;
+    min-height: 80vh;
     align-items: center;
 
     &.loading-finished {
@@ -62,7 +63,8 @@
 }
 
 .fadeOut-enter-active, .fadeOut-leave-active {
-  transition: opacity 0.5s cubic-bezier(.72,.22,.56,1.02) 0.5s;
+  background-color: rgba(66, 37, 131, 0.5);
+  transition: all 0.7s cubic-bezier(.72,.22,.56,1.02) 0.5s;
 }
 .fadeOut-enter, .fadeOut-leave-active {
   opacity: 0;

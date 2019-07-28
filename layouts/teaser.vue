@@ -4,10 +4,11 @@
       <div class="l-Page-leftContainer"></div>
       <div class="l-Page-rightContainer"></div>
     </div>
+    <TheHeader :loadHeader="loadHeader" />
+    <div class="l-Teaser-mobileSwipe" :class="{'slide-in': mobileSwipeIn, 'slide-out': mobileSwipeOut}"></div>
     <transition name="fadeOut" @leave="startCardTransitions">
       <div v-if="loading" class="l-Page-overlay"></div>
     </transition>
-    <TheHeader :loadHeader="loadHeader" />
     <div class="l-Main" :class="{'loading-finished': loadingFinished}">
       <nuxt />
     </div>
@@ -28,7 +29,10 @@
     data() {
       return {
         loadHeader: false,
-        loadingFinished: false
+        loadingFinished: false,
+        mobileSwipeIn: false,
+        mobileSwipeOut: false,
+        containerStyles: {}
       }
     },
     components: {
@@ -43,12 +47,23 @@
     computed: {
       ...mapState('loading-sequence', {
         animationFinished: state => state.animationFinished,
-        loading: state => state.loading
+        loading: state => state.loading,
+        cardTransitions: state => state.startCardTransitions
       })
     },
     watch: {
       loading() {
         this.loadingFinished = true
+      },
+      cardTransitions() {
+        setTimeout(() => {
+          this.mobileSwipeIn = true
+        }, 0)
+      },
+      mobileSwipeIn() {
+        setTimeout(() => {
+          this.mobileSwipeOut = true
+        }, 900)
       }
     },
     methods: {

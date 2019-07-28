@@ -91,7 +91,7 @@ export default {
       let colorIndex = 0
       let lineIndex = 0
       let colors = []
-      let interval = 100
+      let interval = 90
       let linesPlusOne = this.svgLines.length + 1
       
 
