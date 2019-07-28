@@ -56,6 +56,9 @@ export default {
         return number === this.integer
       })
     },
+    verticalLayout() {
+      return window.innerWidth < 768
+    }
   },
   watch: {
     ready() {
@@ -86,9 +89,10 @@ export default {
     },
     colorSvg() {
       let colorIndex = 0
-      let lineIndex = 0
+      let lineIndex = 1
       let colors = []
-      let interval = 70
+      let interval = 100
+      let linesPlusOne = this.svgLines.length + 1
       
 
       this.svgLines.forEach((line, index) => {
@@ -108,17 +112,22 @@ export default {
           clearInterval(counter)
           return
         }
-        if (lineIndex === this.svgLines.length - 18) {
-          this.endLoading()
+        if (!this.verticalLayout) {
+          lineIndex === this.svgLines.length - 24 && this.$eventBus.$emit('applyShadow')
+          lineIndex === this.svgLines.length - 18 && this.endLoading()
         }
+
         let getNewNumber = this.modulo(lineIndex, 6)
         if (getNewNumber && lineIndex !== 0) {
           numberIndex++
         }
         if (lineIndex === this.svgLines.length - 1) {
+          let line = this.svgLines[0]
+          line.setAttribute("stroke", colors[41]);
           this.integer = 42
           this.textColor = '#FFF'
           this.endState = true
+          this.endLoading()
         } else {
           this.integer = this.numbers[numberIndex]
           this.textColor = this.colors[numberIndex]
@@ -174,9 +183,9 @@ export default {
 
     &-innerCircle {
       fill: #fff;
-      transform: scale(0.95);
+      transform: scale(0.96);
       transform-origin: center;
-      transition: all 0.15s ease;
+      transition: all 0.15s ease-in;
 
       &.initial-color {
         fill: $color-purple;
@@ -185,12 +194,13 @@ export default {
       &.initial-motion {
         fill: $color-purple;
         transform: scale(1);
-        transition: all 0.35s ease;
+        transition: all 0.35s ease-out;
       }
 
       &.end {
         fill: $color-slate;
         transform: scale(1);
+        transition: all 0.5s ease-out;
       }
     }
 
@@ -199,13 +209,13 @@ export default {
       opacity: 0;
       text-anchor: middle;
       transform-origin: center;
-      transform: scale(0.95);
+      transform: scale(0.95) translateY(1px);
       transition: opacity 0.15s ease;
 
       &.is-active {
         opacity: 1;
-        transform: scale(1);
-        transition: opacity 0.15s ease, transform 0.15s ease;
+        transform: scale(1) translateY(1px);
+        transition: opacity 0.35s ease, transform 0.15s ease;
       }
     }
   }

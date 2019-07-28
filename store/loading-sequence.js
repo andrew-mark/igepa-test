@@ -2,6 +2,9 @@ export const actions = {
   endLoading({ commit }) {
     commit('END_LOADING')
   },
+  startCardTransitions({ commit }) {
+    commit('START_CARD_TRANSITIONS')
+  },
   animationFinished({ commit }) {
     commit('ANIMATION_FINISHED')
   },
@@ -19,12 +22,16 @@ export const mutations = {
   },
   ANIMATION_STARTED(state) {
     state.animationStarted = true
+  },
+  START_CARD_TRANSITIONS(state) {
+    state.startCardTransitions = true
   }
 }
 
 export const state = () => ({
   animationStarted: false,
   animationFinished: false,
-  loading: true
+  loading: true,
+  startCardTransitions: false
 })
 

@@ -13,6 +13,9 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      { src: `https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.forEach%2CPromise%2CIntersectionObserver%2CNodeList.prototype.forEach%2CArray.from`, body: true}
     ]
   },
   /*
@@ -30,7 +33,9 @@ export default {
   */
   plugins: [
     '~plugins/media-query.js',
-    { src: '~plugins/velocity.js', ssr: false }
+    { src: '~plugins/velocity.js', ssr: false },
+    '~plugins/event-source.js',
+    '~/plugins/event-bus.js'
   ],
   /*
   ** Nuxt.js modules

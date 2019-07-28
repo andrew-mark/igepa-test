@@ -12,7 +12,7 @@ $color-light-grey: #AFB5B9;
   Sizings
 */
 
-$grid-max-content-width: 1280px;
+$grid-max-content-width: 1440px;
 $grid-wrapper-padding-default: 16px;
 $grid-gutters: 32px;
 $grid-columns: 12;
@@ -27,7 +27,8 @@ $breakpoints: (
   medium: 769px,
   medium_large: 880px,
   large: 1024px,
-  extra_large: 1280px
+  extra_large: 1280px,
+  infinity: 1440px
 );
 
 $breakpoints-max: (

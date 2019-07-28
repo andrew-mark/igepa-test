@@ -62,14 +62,21 @@
 }
 
 .fadeOut-enter-active, .fadeOut-leave-active {
-  transition: opacity 1s cubic-bezier(.72,.22,.56,1.02);
+  transition: opacity 1.5s cubic-bezier(.72,.22,.56,1.02) 0.5s;
 }
 .fadeOut-enter, .fadeOut-leave-active {
   opacity: 0;
 }
 
+.fadeOutVerical-enter-active, .fadeOutVerical-leave-active {
+  transition: opacity 20s cubic-bezier(.72,.22,.56,1.02);
+}
+.fadeOutVerical-enter, .fadeOutVerical-leave-active {
+  opacity: 0;
+}
+
 .fadeIn-enter-active, .fadeIn-leave-active {
-  transition: opacity 1s cubic-bezier(.09,.55,.81,.42) 0.3s;
+  transition: opacity 1.5s cubic-bezier(.09,.55,.81,.42) 0.3s;
 }
 .fadeIn-enter, .fadeIn-leave-active {
   opacity: 0;

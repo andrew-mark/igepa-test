@@ -4,7 +4,7 @@
       <div class="l-Page-leftContainer"></div>
       <div class="l-Page-rightContainer"></div>
     </div>
-    <transition name="fadeOut">
+    <transition name="fadeOut" @leave="startCardTransitions">
       <div v-if="loading" class="l-Page-overlay"></div>
     </transition>
     <TheHeader :loadHeader="loadHeader" />
@@ -22,7 +22,7 @@
 <script>
   import TheHeader from '@/components/TheHeader'
   import TheFooter from '@/components/TheFooter'
-  import { mapState } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
     data() {
@@ -35,18 +35,32 @@
       TheHeader,
       TheFooter
     },
+    mounted() {
+      this.$eventBus.$on('load-header', () => {
+        this.loadHeader = true
+      })
+    },
     computed: {
       ...mapState('loading-sequence', {
         animationFinished: state => state.animationFinished,
         loading: state => state.loading
-      })
+      }),
+      verticalLayout() {
+        return window.innerWidth < 768
+      },
+      overlayTransitionName() {
+        return this.verticalLayout ? 'fadeOutVertical' : 'fadeOut'
+      }
     },
     watch: {
       loading() {
-        this.loadHeader = true
         this.loadingFinished = true
       }
+    },
+    methods: {
+      ...mapActions({
+        startCardTransitions: 'loading-sequence/startCardTransitions'
+      })
     }
   }
 </script>
-

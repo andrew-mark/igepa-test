@@ -25,7 +25,7 @@
     },
     computed: {
       getHeight() {
-        return this.loadHeader ? {transform: 'scale(1)', position: 'relative'} : {transform: 'scale(0)', position: 'absolute'}
+        return this.loadHeader ? {visibility: 'visible', position: 'relative'} : {visibility: 'hidden', position: 'absolute'}
       }
     }
   }

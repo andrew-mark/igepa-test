@@ -13,7 +13,9 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/style-resources": "^0.1.2",
+    "event-source-polyfill": "^1.0.7",
     "lodash.debounce": "^4.0.8",
+    "mdn-polyfills": "^5.18.0",
     "nuxt": "^2.0.0",
     "nuxt-svg-loader": "^1.0.1",
     "spectre.css": "^0.5.8",

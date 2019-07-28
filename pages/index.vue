@@ -1,7 +1,12 @@
 <template>
   <div ref="teaserContainer" class="l-Teaser">
     <div class="l-Teaser-wrapper">
-      <div class="l-Teaser-container l-Teaser-container--center" :class="{'fullscreen': loading, 'animation-finished': animationIsFinished}">
+      <div v-if="!positionCalculated" class="l-Teaser-containerClone">
+        <div class="l-Teaser-textClone"></div>
+        <div class="l-Teaser-cardClone"></div>
+        <div class="l-Teaser-placeholder"></div>
+      </div>
+      <div class="l-Teaser-container l-Teaser-container--center" ref="container" :style="lazyContainerStyles" :class="{'fullscreen': !startCardTransitions, 'animation-finished': animationIsFinished}">
         <div class="l-Teaser-text" :class="[getTextClasses]">
           <div v-if="showText" class="l-Teaser-container l-Teaser-container--text">
             <div class="l-Teaser-textInner">
@@ -43,7 +48,7 @@
             </div>
           </mq-layout>
         </div>
-        <div class="l-Teaser-card" ref="card" :style="setStyles">
+        <div class="l-Teaser-card" ref="card" :class="{'has-box-shadow': applyBoxShadow && cardRequiresHorizontalMovement}" :style="lazyCardStyles">
           <KeyVisual />
         </div>
       </div>
@@ -66,8 +71,8 @@
     },
     data() {
       return {
-        animationHasFinishedStyles: {},
         calculationFinished: false,
+        container: null,
         card: null,
         headline: null,
         showText: false,
@@ -77,8 +82,14 @@
         showHeadline: false,
         showRemainingInformation: false,
         windowSize: null,
+        positionCalculated: false,
         resizeObserved: false,
-        showSubline: false
+        showSubline: false,
+        lazyCardStyles: {},
+        lazyContainerStyles: {},
+        placeholderWidth: 0,
+        isIE11: false,
+        applyBoxShadow: false
       }
     },
     head() {
@@ -90,21 +101,38 @@
     },
     mounted() {
       this.headline = SplitWord('Moments')
+      this.isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
       this.attachRefs()
       this.registerEventListeners()
       this.getEdgeValueOfCard()
+      this.calculatePointToTravelTo()
       this.windowSize = window.innerWidth
+      this.$eventBus.$on('applyShadow', () => {
+        this.applyBoxShadow = true
+      })
     },
     watch: {
-      loading() {
+      startCardTransitions() {
         this.startTransitions()
       },
+      animationIsFinished() {
+        if (this.cardRequiresHorizontalMovement) {
+          if (this.isIE11) {
+            this.applyLazyStyles()
+          } else {
+            setTimeout(() => {
+              this.applyLazyStyles()
+            }, 5000)
+          }
+        }
+      }
     },
     computed: {
       ...mapState('loading-sequence', {
         animationHasStarted: state => state.animationStarted,
         animationIsFinished: state => state.animationFinished,
-        loading: state => state.loading
+        loading: state => state.loading,
+        startCardTransitions: state => state.startCardTransitions
       }),
       cardRequiresHorizontalMovement() {
         return window.innerWidth > 768
@@ -136,14 +164,6 @@
           ]
         }
       },
-      setStyles() {
-        if (this.resizeObserved) {
-          return {
-            position: 'relative',
-            transform: 'translateX(0)'
-          }
-        }
-      }
     },
     methods: {
       ...mapActions({
@@ -151,27 +171,55 @@
         animationFinished: 'loading-sequence/animationFinished'
       }),
       registerEventListeners() {
-        window.addEventListener('resize', debounce(this.hello, 0))
+        window.addEventListener('resize', debounce(this.handleResize, 0))
       },
-      hello() {
+      applyLazyStyles() {
+        this.lazyCardStyles = {
+          transform: 'translateX(0)',
+          position: 'relative',
+          marginRight: `${this.placeholderWidth}%`
+        }
+        this.lazyContainerStyles = {
+          flexDirection: 'row',
+          justifyContent: 'space-between'
+        }
+      },
+      handleResize() {
         this.resizeObserved = true
         this.windowSize = window.innerWidth
+
+        if (this.windowSize < 768) {
+          this.resizeMargin = {
+            marginRight: 0
+          }
+        } else if (this.windowSize < 1024) {
+          this.resizeMargin = {
+            marginRight: `calc((${this.placeholderWidth} / 4) * 3%)`
+          }
+        } else {
+          this.resizeMargin = {marginRight: `${this.placeholderWidth}%`}
+        }
       },
       attachRefs() {
         this.card = this.$refs.card
+        this.container = this.$refs.container
       },
       startTransitions() {
         if (this.cardRequiresHorizontalMovement) {
           this.animationStarted()
-          this.$velocity(this.card, { translateX: `${this.translateDistanceForCard}px`}, { duration: 1800 }, [0.09, 0.55, 0.83, 0.67])
+          this.$eventBus.$emit('load-header')
+          this.$velocity(this.card, { translateX: `${this.translateDistanceForCard}px`}, { duration: 1000 }, [0.09, 0.55, 0.83, 0.67])
           .then(() => {
             this.showText = true
             this.finishTransitions()
           })
+          
         } else {
           this.animationStarted()
-          this.$velocity(this.card, { translateY: `${this.translateDistanceForCard}px` }, { duration: 1500 })
+         
+          this.$velocity(this.card, { opacity: 0 }, { duration: 1000 })
           .then(() => {
+            this.$velocity(this.card, { opacity: 1 }, { duration: 100 })
             this.showText = true
             this.finishTransitions()
           })
@@ -180,9 +228,12 @@
       finishTransitions() {
         if (this.cardRequiresHorizontalMovement) {
           this.card.classList.add('animation-finished')
+          if (!this.isIE11) {
+            this.card.classList.add('is-not-IE')
+          }
         } else {
+          this.$eventBus.$emit('load-header')
           this.card.classList.add('animation-finished');
-          this.$velocity(this.card, { translateY: 0 })
         }
         this.animationFinished()
       },
@@ -203,29 +254,25 @@
       afterHeadlineAppears() {
         this.showSubline = true
       },
-      getPointToTravelTo() {
-        let viewportWidth = window.innerWidth
-        if (viewportWidth >= 1280) {
-          this.pointToTravelTo = 1280 - 150
-        } else if (viewportWidth >= 1024) {
-          this.pointToTravelTo = viewportWidth - 200
-        } else if (viewportWidth >= 880) {
-          this.pointToTravelTo = viewportWidth - 50
-        } else {
-           this.pointToTravelTo = viewportWidth - 24
-        }
-      },
       getEdgeValueOfCard() {
         let cardBoundingBox = this.card.getBoundingClientRect()
         let bodyBoundingBox = document.body.getBoundingClientRect()
         let wrapperBoundingBox = document.querySelector('.l-Page-dimensionHelper').getBoundingClientRect().left
         let wrapperStartPoint = wrapperBoundingBox - bodyBoundingBox.right
         if (this.cardRequiresHorizontalMovement) {
-          this.startPointOfCard = cardBoundingBox.right - wrapperBoundingBox
+          this.startPointOfCard = cardBoundingBox.right
         } else {
           this.startPointOfCard = cardBoundingBox.top - bodyBoundingBox.top
         }
-        this.getPointToTravelTo()
+      },
+      calculatePointToTravelTo() {
+        let cardClone = this.$el.querySelector('.l-Teaser-cardClone')
+        let wrapperBoundingBox = document.querySelector('.l-Page-dimensionHelper').clientWidth
+        let placeholderWidth = this.$el.querySelector('.l-Teaser-placeholder').clientWidth
+        this.placeholderWidth = placeholderWidth / (wrapperBoundingBox / 100)
+        let cardCloneBoundingBox = cardClone.getBoundingClientRect().right
+        this.pointToTravelTo = cardCloneBoundingBox
+        this.positionCalculated = true
       }
     }
   }
