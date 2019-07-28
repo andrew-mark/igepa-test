@@ -68,10 +68,10 @@
   opacity: 0;
 }
 
-.fadeOutVerical-enter-active, .fadeOutVerical-leave-active {
-  transition: opacity 20s cubic-bezier(.72,.22,.56,1.02);
+.fadeOutVertical-enter-active, .fadeOutVertical-leave-active {
+  transition: opacity 1s cubic-bezier(.72,.22,.56,1.02);
 }
-.fadeOutVerical-enter, .fadeOutVerical-leave-active {
+.fadeOutVertical-enter, .fadeOutVertical-leave-active {
   opacity: 0;
 }
 
