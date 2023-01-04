@@ -16,7 +16,7 @@
     "event-source-polyfill": "^1.0.7",
     "lodash.debounce": "^4.0.8",
     "mdn-polyfills": "^5.18.0",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.15.8",
     "nuxt-svg-loader": "^1.0.1",
     "spectre.css": "^0.5.8",
     "velocity-animate": "^1.5.2",
